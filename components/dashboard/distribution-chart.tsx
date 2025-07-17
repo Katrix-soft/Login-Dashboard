@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, TooltipProps, LegendProps } from 'recharts';
 
 const data = [
   { name: 'ENEL', value: 2, color: '#3B82F6' },
@@ -10,8 +10,8 @@ const data = [
   { name: 'SUNASS', value: 1, color: '#8B5CF6' },
 ];
 
-const CustomTooltip = ({ active, payload }: any) => {
-  if (active && payload && payload.length) {
+const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
+  if (active && payload && payload.length > 0) {
     return (
       <div className="glass-panel rounded-xl p-3 border-0">
         <p className="text-katrix-pearl-bush font-medium">
@@ -23,10 +23,12 @@ const CustomTooltip = ({ active, payload }: any) => {
   return null;
 };
 
-const CustomLegend = ({ payload }: any) => {
+const CustomLegend = ({ payload }: LegendProps) => {
+  if (!payload) return null;
+  
   return (
     <div className="flex justify-center space-x-6 mt-4">
-      {payload.map((entry: any, index: number) => (
+      {payload.map((entry, index) => (
         <div key={index} className="flex items-center space-x-2">
           <div 
             className="w-3 h-3 rounded-full" 

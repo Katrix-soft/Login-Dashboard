@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell, TooltipProps } from 'recharts';
 
 const data = [
   { name: 'ENEL', value: 1250, color: '#3B82F6' },
@@ -9,6 +9,19 @@ const data = [
   { name: 'OSINERGMIN', value: 890, color: '#F59E0B' },
   { name: 'SUNASS', value: 650, color: '#8B5CF6' },
 ];
+
+const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
+  if (active && payload && payload.length > 0) {
+    return (
+      <div className="glass-panel rounded-xl p-3 border-0">
+        <p className="text-katrix-pearl-bush font-medium">
+          {label}: S/ {payload[0].value}
+        </p>
+      </div>
+    );
+  }
+  return null;
+};
 
 export function CostChart() {
   return (
